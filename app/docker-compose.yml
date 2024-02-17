@@ -1,0 +1,20 @@
+version: '3'
+services:
+    back-end:
+        image: helenete/app:latest
+        environment:
+             CURRENT_ENVIRONMENT: development
+        # volumes:
+        #     - db-data:/var/lib/app/data
+    front-end:
+        image: helenete/front-app:latest
+        ports:
+            - "80:80" 
+        environment:
+        - WS_BACK_URL=http://127.0.0.1:6000
+    reverse-proxy:
+        image: helenete/front-app:latest
+        ports:
+            - "80:80" 
+        depends_on:
+            - back-end
